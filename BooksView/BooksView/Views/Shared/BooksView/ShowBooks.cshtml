@@ -1,0 +1,14 @@
+﻿@model BooksView.Models.BooksViewModel
+
+@for (int i = 0; i < @Model.ListOfBooks.Count; i++)
+{
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="height:220px">
+        <div>
+            <img src="@Model.ListOfBooks[i].ImageUrl" alt="@Model.ListOfBooks[i].Title" class="img-responsive" style="max-height:140px" />
+        </div>
+        <p>@Model.ListOfBooks[i].Title</p>
+        <p>ISBN:@Model.ListOfBooks[i].ISBN13</p>
+
+    </div>
+}
+

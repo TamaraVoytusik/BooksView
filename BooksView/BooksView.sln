@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksView", "BooksView\BooksView.csproj", "{DE011B59-F497-468A-B098-4D58EEFC379F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksDAL", "BooksDAL\BooksDAL.csproj", "{EE2F0171-9EAF-4855-AF40-859FD948BF6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE011B59-F497-468A-B098-4D58EEFC379F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE011B59-F497-468A-B098-4D58EEFC379F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE011B59-F497-468A-B098-4D58EEFC379F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE011B59-F497-468A-B098-4D58EEFC379F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE2F0171-9EAF-4855-AF40-859FD948BF6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE2F0171-9EAF-4855-AF40-859FD948BF6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE2F0171-9EAF-4855-AF40-859FD948BF6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE2F0171-9EAF-4855-AF40-859FD948BF6F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

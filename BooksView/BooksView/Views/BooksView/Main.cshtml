@@ -1,0 +1,126 @@
+﻿@model BooksView.Models.BooksViewModel
+@{
+    ViewBag.Title = "Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+    <script>
+        function SearchForPartOfBooks(formattedValue, isFirstTime, loadingSp)
+        {
+            var jqdivWithBooks = $('#divWithBooks');
+            var maxLength = 1400;
+            var partToPass = formattedValue;
+            if (formattedValue.length > maxLength)
+            {
+                var separatorIndex = formattedValue.lastIndexOf(',', maxLength);
+                if (separatorIndex <= 0)
+                {
+                    separatorIndex = maxLength;
+                }
+                partToPass = formattedValue.substr(0, separatorIndex);
+                formattedValue = formattedValue.substr(separatorIndex);
+            }
+            else
+            {
+                partToPass = formattedValue;
+                formattedValue = "";
+            }
+            $.ajax
+             ({
+                 url: '/BooksView/GetBooks',
+                 type: 'GET',
+                 dataType: 'html',
+                 data: "unparsedISBN=" + partToPass
+             }).
+                 done(function (data)
+                 {
+                     if (isFirstTime)
+                     {
+                         jqdivWithBooks.html(data);
+                     }
+                     else
+                     {
+                         jqdivWithBooks.append(data);
+                     }
+                     if (formattedValue.length > 0)
+                     {
+                         SearchForPartOfBooks(formattedValue, false, loadingSp);
+                     }
+                     else
+                     {
+                         if (jqdivWithBooks.is(':empty') || jqdivWithBooks.html().trim() == "")
+                         {
+                             jqdivWithBooks.append("<div class='col-xs-10 col-sm-10 col-md-10 col-lg-10'><p>No results found</p></div>");
+                         }
+                         loadingSp.hide();
+                     }
+                 });
+        }
+
+        function SearchForBooks()
+        {
+            var element = document.getElementById('unparsedISBN');
+            if (element.value.trim() != '')
+            {
+                var formattedValue = element.value.trim();
+                var loadingSp = $("#loadingSpan");
+                loadingSp.show();
+                formattedValue = formattedValue.replace(new RegExp(',', 'g'), '');
+                formattedValue = formattedValue.replace(new RegExp('\n', 'g'), ',');
+                SearchForPartOfBooks(formattedValue, true, loadingSp);
+            }
+            else
+            {
+                var jqueryTb = $("#unparsedISBN");
+                var invalidClass = "invalid";
+                if (!jqueryTb.hasClass(invalidClass))
+                {
+                    jqueryTb.addClass(invalidClass);
+                }
+                if (!jqueryTb.attr("validationAttached"))
+                {
+                    jqueryTb.on("change", function ()
+                    {
+                        var valid = this.value.trim() != '';
+                        var jqueryTb = $(this);
+                        if (valid)
+                        {
+                            if (jqueryTb.hasClass(invalidClass))
+                            {
+                                jqueryTb.removeClass(invalidClass);
+                            }
+                        }
+                        else
+                        {
+                            if (!jqueryTb.hasClass(invalidClass))
+                            {
+                                jqueryTb.addClass(invalidClass);
+                            }
+                        }
+
+                    });
+                    jqueryTb.attr("validationAttached", true);
+                }
+            }
+        }
+    </script>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="panel-body">
+            <div id="sideDiv" class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                <textarea id="unparsedISBN" placeholder="Enter ISBN number here, separate by new line" rows="20" cols="20"></textarea>
+                <br />
+                <button id="btnSearch" class="btn btn-default" onclick="SearchForBooks()">
+                    <span id="loadingSpan" class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="display:none;"></span>Search for books
+                </button>
+            </div>
+            <div id="divWithBooks" class="col-xs-12 col-sm-12 col-md-offset-1 col-md-8 col-lg-9">
+
+                @{Html.RenderPartial("BooksView/ShowBooks", @Model);}
+
+            </div>
+        </div>
+    </div>
+</div>
